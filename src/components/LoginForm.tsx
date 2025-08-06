@@ -337,12 +337,14 @@ const LoginForm: React.FC = () => {
             {isRegistering && (
               <div className="text-center text-xs text-peacock-400 bg-peacock-500/10 border border-peacock-500/20 rounded-lg p-3">
                 <p>By creating an account, you agree to follow lab guidelines and return borrowed components on time.</p>
+                <p className="mt-1">🔒 Your data is securely stored with Firebase cloud authentication.</p>
               </div>
             )}
             
             
             <div className="text-center text-xs text-dark-400">
               <p>© 2024 Isaac Asimov Robotics Lab. All rights reserved.</p>
+              <p className="mt-1">🔥 Powered by Firebase & React</p>
             </div>
           </motion.div>
         </div>

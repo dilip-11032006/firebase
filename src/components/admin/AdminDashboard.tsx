@@ -189,6 +189,17 @@ const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
+        {/* Firebase Sync Status */}
+        <div className="mb-4 p-3 sm:p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
+          <div className="flex items-center gap-2 sm:gap-3 mb-2">
+            <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+            <h4 className="text-blue-400 font-semibold text-sm sm:text-base">🔄 Firebase Cloud Sync</h4>
+          </div>
+          <p className="text-blue-300 text-xs sm:text-sm">
+            Data is automatically synchronized with Firebase cloud storage for real-time collaboration and backup.
+          </p>
+        </div>
+
         <div className="space-y-4">
           <motion.button
             whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(0, 206, 209, 0.3)' }}
