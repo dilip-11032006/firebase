@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, X, Package, User, Phone, Calendar, AlertTriangle, Search, Filter } from 'lucide-react';
-import { dataService } from '../../services/dataService';
+import { hybridDataService } from '../../services/hybridDataService';
 import { BorrowRequest, Component } from '../../types';
 
 interface RequestManagementProps {
@@ -18,12 +18,12 @@ const RequestManagement: React.FC<RequestManagementProps> = ({ onUpdate }) => {
   }, []);
 
   const loadRequests = () => {
-    const allRequests = dataService.getRequests();
+    const allRequests = hybridDataService.getRequests();
     setRequests(allRequests.sort((a, b) => new Date(b.requestDate).getTime() - new Date(a.requestDate).getTime()));
   };
 
   const handleApprove = (request: BorrowRequest) => {
-    const components = dataService.getComponents();
+    const components = hybridDataService.getComponents();
     const component = components.find(c => c.id === request.componentId);
     
     if (!component || component.availableQuantity < request.quantity) {
@@ -33,7 +33,7 @@ const RequestManagement: React.FC<RequestManagementProps> = ({ onUpdate }) => {
 
     // Update component availability
     component.availableQuantity -= request.quantity;
-    dataService.updateComponent(component);
+    hybridDataService.updateComponent(component);
 
     // Update request status
     const updatedRequest = {
@@ -42,10 +42,10 @@ const RequestManagement: React.FC<RequestManagementProps> = ({ onUpdate }) => {
       approvedBy: 'Administrator',
       approvedAt: new Date().toISOString(),
     };
-    dataService.updateRequest(updatedRequest);
+    hybridDataService.updateRequest(updatedRequest);
 
     // Add notification for student
-    dataService.addNotification({
+    hybridDataService.addNotification({
       id: `notif-${Date.now()}`,
       userId: request.studentId,
       title: 'Request Approved! 🎉',
@@ -65,10 +65,10 @@ const RequestManagement: React.FC<RequestManagementProps> = ({ onUpdate }) => {
       status: 'rejected' as const,
       notes: reason,
     };
-    dataService.updateRequest(updatedRequest);
+    hybridDataService.updateRequest(updatedRequest);
 
     // Add notification for student
-    dataService.addNotification({
+    hybridDataService.addNotification({
       id: `notif-${Date.now()}`,
       userId: request.studentId,
       title: 'Request Update',

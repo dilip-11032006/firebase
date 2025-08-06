@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { LogOut, Cpu, Users, Wifi, WifiOff } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { dataService } from '../services/dataService';
+import { hybridDataService } from '../services/hybridDataService';
 import NotificationBell from './NotificationBell';
 
 const Header: React.FC = () => {
@@ -12,7 +12,7 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     const updateOnlineCount = () => {
-      const stats = dataService.getSystemStats();
+      const stats = hybridDataService.getSystemStats();
       setOnlineCount(stats.onlineUsers);
     };
     

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Edit, Package, Search, Trash2 } from 'lucide-react';
-import { dataService } from '../../services/dataService';
+import { hybridDataService } from '../../services/hybridDataService';
 import { Component } from '../../types';
 
 const InventoryManagement: React.FC = () => {
@@ -22,7 +22,7 @@ const InventoryManagement: React.FC = () => {
   }, []);
 
   const loadComponents = () => {
-    setComponents(dataService.getComponents());
+    setComponents(hybridDataService.getComponents());
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -37,7 +37,7 @@ const InventoryManagement: React.FC = () => {
         category: formData.category,
         description: formData.description,
       };
-      dataService.updateComponent(updatedComponent);
+      hybridDataService.updateComponent(updatedComponent);
     } else {
       const newComponent: Component = {
         id: `comp-${Date.now()}`,
@@ -47,7 +47,7 @@ const InventoryManagement: React.FC = () => {
         category: formData.category,
         description: formData.description,
       };
-      dataService.addComponent(newComponent);
+      hybridDataService.addComponent(newComponent);
     }
 
     resetForm();
@@ -71,7 +71,7 @@ const InventoryManagement: React.FC = () => {
 
   const confirmDelete = () => {
     if (componentToDelete) {
-      dataService.deleteComponent(componentToDelete.id);
+      hybridDataService.deleteComponent(componentToDelete.id);
       setComponentToDelete(null);
       loadComponents();
     }

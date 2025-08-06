@@ -10,7 +10,7 @@ import {
   Calendar,
   BarChart3
 } from 'lucide-react';
-import { dataService } from '../../services/dataService';
+import { hybridDataService } from '../../services/hybridDataService';
 import { LoginSession, SystemStats } from '../../types';
 
 const UserAnalytics: React.FC = () => {
@@ -34,12 +34,12 @@ const UserAnalytics: React.FC = () => {
   }, []);
 
   const loadData = () => {
-    setStats(dataService.getSystemStats());
-    setLoginSessions(dataService.getLoginSessions());
+    setStats(hybridDataService.getSystemStats());
+    setLoginSessions(hybridDataService.getLoginSessions());
   };
 
   const exportLoginData = () => {
-    const csvContent = dataService.exportLoginSessionsCSV();
+    const csvContent = hybridDataService.exportLoginSessionsCSV();
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     

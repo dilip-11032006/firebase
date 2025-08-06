@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { RotateCcw, Package, User, Calendar, CheckCircle, Search, Filter } from 'lucide-react';
-import { dataService } from '../../services/dataService';
+import { hybridDataService } from '../../services/hybridDataService';
 import { BorrowRequest } from '../../types';
 
 interface ReturnManagementProps {
@@ -18,18 +18,18 @@ const ReturnManagement: React.FC<ReturnManagementProps> = ({ onUpdate }) => {
   }, []);
 
   const loadApprovedItems = () => {
-    const allRequests = dataService.getRequests();
+    const allRequests = hybridDataService.getRequests();
     const approved = allRequests.filter(r => r.status === 'approved');
     setApprovedItems(approved.sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()));
   };
 
   const handleReturn = (request: BorrowRequest) => {
-    const components = dataService.getComponents();
+    const components = hybridDataService.getComponents();
     const component = components.find(c => c.id === request.componentId);
     
     if (component) {
       component.availableQuantity += request.quantity;
-      dataService.updateComponent(component);
+      hybridDataService.updateComponent(component);
     }
 
     const updatedRequest = {
@@ -37,10 +37,10 @@ const ReturnManagement: React.FC<ReturnManagementProps> = ({ onUpdate }) => {
       status: 'returned' as const,
       returnedAt: new Date().toISOString(),
     };
-    dataService.updateRequest(updatedRequest);
+    hybridDataService.updateRequest(updatedRequest);
 
     // Add notification for student
-    dataService.addNotification({
+    hybridDataService.addNotification({
       id: `notif-${Date.now()}`,
       userId: request.studentId,
       title: 'Item Returned Successfully',

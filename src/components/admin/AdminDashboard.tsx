@@ -13,7 +13,7 @@ import {
   FileSpreadsheet,
   Eye
 } from 'lucide-react';
-import { dataService } from '../../services/dataService';
+import { hybridDataService } from '../../services/hybridDataService';
 import { BorrowRequest, Component, SystemStats } from '../../types';
 import RequestManagement from './RequestManagement';
 import InventoryManagement from './InventoryManagement';
@@ -43,7 +43,7 @@ const AdminDashboard: React.FC = () => {
   }, []);
 
   const loadStats = () => {
-    setStats(dataService.getSystemStats());
+    setStats(hybridDataService.getSystemStats());
   };
 
   const tabs = [

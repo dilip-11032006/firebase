@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Package, User, Phone, Calendar, Hash, CheckCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { dataService } from '../../services/dataService';
+import { hybridDataService } from '../../services/hybridDataService';
 import { Component, BorrowRequest } from '../../types';
 
 const BorrowForm: React.FC = () => {
@@ -19,7 +19,7 @@ const BorrowForm: React.FC = () => {
   const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
   useEffect(() => {
-    setComponents(dataService.getComponents());
+    setComponents(hybridDataService.getComponents());
     // Pre-fill user data if available
     if (user) {
       setFormData(prev => ({
@@ -67,10 +67,10 @@ const BorrowForm: React.FC = () => {
         status: 'pending',
       };
 
-      dataService.addRequest(request);
+      await hybridDataService.addRequest(request);
 
       // Add notification for admin
-      dataService.addNotification({
+      await hybridDataService.addNotification({
         id: `notif-${Date.now()}`,
         userId: 'admin-1',
         title: 'New Component Request',

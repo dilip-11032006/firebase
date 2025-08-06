@@ -18,7 +18,7 @@ import {
   Shield
 } from 'lucide-react';
 import { excelService } from '../../services/excelService';
-import { dataService } from '../../services/dataService';
+import { hybridDataService } from '../../services/hybridDataService';
 
 interface ExportPreviewModalProps {
   isOpen: boolean;
@@ -32,7 +32,7 @@ const ExportPreviewModal: React.FC<ExportPreviewModalProps> = ({ isOpen, onClose
   React.useEffect(() => {
     if (isOpen) {
       setIsLoading(true);
-      const data = dataService.getData();
+      const data = hybridDataService.getData();
       const preview = excelService.generatePreviewData(data);
       setPreviewData(preview);
       setIsLoading(false);
@@ -40,7 +40,7 @@ const ExportPreviewModal: React.FC<ExportPreviewModalProps> = ({ isOpen, onClose
   }, [isOpen]);
 
   const handleDownloadExcel = () => {
-    const data = dataService.getData();
+    const data = hybridDataService.getData();
     excelService.exportToExcel(data);
     onClose();
   };

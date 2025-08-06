@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Package, Clock, CheckCircle, XCircle, AlertCircle, Calendar, User } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { dataService } from '../../services/dataService';
+import { hybridDataService } from '../../services/hybridDataService';
 import { BorrowRequest } from '../../types';
 
 const BorrowedItems: React.FC = () => {
@@ -12,7 +12,7 @@ const BorrowedItems: React.FC = () => {
 
   useEffect(() => {
     if (user) {
-      const userRequests = dataService.getUserRequests(user.id);
+      const userRequests = hybridDataService.getUserRequests(user.id);
       setRequests(userRequests.sort((a, b) => new Date(b.requestDate).getTime() - new Date(a.requestDate).getTime()));
     }
   }, [user]);

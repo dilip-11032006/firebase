@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, AlertTriangle, Clock } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { dataService } from '../../services/dataService';
+import { hybridDataService } from '../../services/hybridDataService';
 import { BorrowRequest } from '../../types';
 
 const DueDates: React.FC = () => {
@@ -11,7 +11,7 @@ const DueDates: React.FC = () => {
 
   useEffect(() => {
     if (user) {
-      const userRequests = dataService.getUserRequests(user.id);
+      const userRequests = hybridDataService.getUserRequests(user.id);
       const approved = userRequests.filter(r => r.status === 'approved');
       const sorted = approved.sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime());
       setUpcomingItems(sorted);

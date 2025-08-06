@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bell, X, Check } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { dataService } from '../services/dataService';
+import { hybridDataService } from '../services/hybridDataService';
 import { Notification } from '../types';
 
 const NotificationBell: React.FC = () => {
@@ -21,21 +21,21 @@ const NotificationBell: React.FC = () => {
 
   const loadNotifications = () => {
     if (user) {
-      const userNotifications = dataService.getUserNotifications(user.id);
+      const userNotifications = hybridDataService.getUserNotifications(user.id);
       setNotifications(userNotifications.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()));
       setUnreadCount(userNotifications.filter(n => !n.read).length);
     }
   };
 
   const markAsRead = (notificationId: string) => {
-    dataService.markNotificationAsRead(notificationId);
+    hybridDataService.markNotificationAsRead(notificationId);
     loadNotifications();
   };
 
   const markAllAsRead = () => {
     notifications.forEach(notification => {
       if (!notification.read) {
-        dataService.markNotificationAsRead(notification.id);
+        hybridDataService.markNotificationAsRead(notification.id);
       }
     });
     loadNotifications();

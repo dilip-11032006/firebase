@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { History, Search, Filter, Calendar, User, Package } from 'lucide-react';
-import { dataService } from '../../services/dataService';
+import { hybridDataService } from '../../services/hybridDataService';
 import { BorrowRequest } from '../../types';
 
 const BorrowHistory: React.FC = () => {
@@ -15,7 +15,7 @@ const BorrowHistory: React.FC = () => {
   }, []);
 
   const loadHistory = () => {
-    const requests = dataService.getRequests();
+    const requests = hybridDataService.getRequests();
     setHistory(requests.sort((a, b) => new Date(b.requestDate).getTime() - new Date(a.requestDate).getTime()));
   };
 
